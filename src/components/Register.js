@@ -26,6 +26,7 @@ class RegistrationForm extends React.Component {
                     })
                 }).then((response) => {
                     message.success(response);
+                    this.props.history.push('/login'); // use for landing, but we cannot use redirect here, since we don't render here. It's not a render action
                 }, (response) => {
                     message.error(response.responseText);
                 }).catch((error) => {
