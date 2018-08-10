@@ -3,6 +3,8 @@
 @import './Main.css';
 @import './Login.css';
 @import './Header.css';
+@import './Home.css';
+@import './Gallery.css';
 
 .App {
   text-align: center;
