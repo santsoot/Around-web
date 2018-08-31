@@ -22,7 +22,7 @@ export class Gallery extends React.Component {
                 ...image,
                 customOverlay: (
                     <div className="captionStyle">
-                        {`${image.user}: ${image.caption}`}
+                       <div> {`${image.user}: ${image.caption}`} </div>
                     </div>
                 )
             }

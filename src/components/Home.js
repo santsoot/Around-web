@@ -1,11 +1,12 @@
 import React from 'react';
 import $ from 'jquery';
-import { Tabs, Button, Spin } from 'antd';
+import { Tabs, Spin } from 'antd';
 import { GEO_OPTIONS, POS_KEY, API_ROOT, TOKEN_KEY, AUTH_PREFIX } from '../constants'
 import { Gallery } from './Gallery';
+import { CreatePostButton } from './CreatePostButton'
 
 const TabPane = Tabs.TabPane;
-const operations = <Button>Extra Action</Button>;
+const operations = <CreatePostButton/>;
 
 export class Home extends React.Component {
     state = {
@@ -79,7 +80,7 @@ export class Home extends React.Component {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`
             },
         }).then((posts) => {
-            this.setState({ posts, loadingPosts: false, error: '' });
+            this.setState({ posts: posts, loadingPosts: false, error: '' });
             console.log(posts);
         }, (error) => {
             this.setState({ loadingPosts: false, error: error.responseText });
@@ -92,11 +93,13 @@ export class Home extends React.Component {
 
 
     render() {
-            console.log(this.state);
           return (
               <Tabs tabBarExtraContent={operations} className = "main-tabs">
-                  <TabPane tab="Posts" key="1">{this.getGalleryPanelContent()}</TabPane>
-                  <TabPane tab="Map" key="2">Content of tab 2</TabPane>
+                  <TabPane tab="Image" key="1">
+                      {this.getGalleryPanelContent()}
+                  </TabPane>
+                  <TabPane tab="video" key ="2">Content of tab 2</TabPane>
+                  <TabPane tab="Map" key="3">Content of tab 3</TabPane>
               </Tabs>
           );
         }
