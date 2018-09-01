@@ -6,9 +6,9 @@ import { Gallery } from './Gallery';
 import { CreatePostButton } from './CreatePostButton'
 
 const TabPane = Tabs.TabPane;
-const operations = <CreatePostButton/>;
 
 export class Home extends React.Component {
+
     state = {
         loadingGeoLocation: false,
         loadingPosts: false,
@@ -71,17 +71,17 @@ export class Home extends React.Component {
     }
 
     loadNearbyPosts = () => {
-        const { latitude, longitude } = JSON.parse(localStorage.getItem(POS_KEY));
+        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
         this.setState({ loadingPosts: true, error: ''});
         $.ajax({
-            url: `${API_ROOT}/search?lat=${latitude}&lon=${longitude}&range=20000`,
+            url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`,
             method: 'GET',
             headers: {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`
             },
-        }).then((posts) => {
-            this.setState({ posts: posts, loadingPosts: false, error: '' });
-            console.log(posts);
+        }).then((response) => {
+            this.setState({ posts: response, loadingPosts: false, error: '' });
+            console.log(response);
         }, (error) => {
             this.setState({ loadingPosts: false, error: error.responseText });
             console.log(error);
@@ -93,7 +93,8 @@ export class Home extends React.Component {
 
 
     render() {
-          return (
+        const operations = <CreatePostButton loadNearbyPosts={this.loadNearbyPosts}/>;
+        return (
               <Tabs tabBarExtraContent={operations} className = "main-tabs">
                   <TabPane tab="Image" key="1">
                       {this.getGalleryPanelContent()}
@@ -101,6 +102,6 @@ export class Home extends React.Component {
                   <TabPane tab="video" key ="2">Content of tab 2</TabPane>
                   <TabPane tab="Map" key="3">Content of tab 3</TabPane>
               </Tabs>
-          );
+        );
         }
     }

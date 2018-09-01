@@ -43,7 +43,7 @@ class CreatePostForm extends React.Component {
                     label="Image"
                 >
                     <div className="dropbox">
-                        {getFieldDecorator('Image', {
+                        {getFieldDecorator('image', {
                             valuePropName: 'fileList',
                             getValueFromEvent: this.normFile,
                             rules: [{
