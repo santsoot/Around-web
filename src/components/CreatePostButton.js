@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, message } from 'antd';
 import { WrappedCreatePostForm } from './CreatePostForm';
 import $ from 'jquery';
-import { API_ROOT, AUTH_PREFIX, POS_KEY, TOKEN_KEY } from '../constants'
+import { API_ROOT, AUTH_PREFIX, POS_KEY, TOKEN_KEY, LOC_SHAKE } from '../constants'
 
 export class CreatePostButton extends React.Component {
     state = {
@@ -26,8 +26,8 @@ export class CreatePostButton extends React.Component {
 
                 // set lat lon message image
                 const token = localStorage.getItem(TOKEN_KEY);
-                formData.set('lat', lat);
-                formData.set('lon', lon);
+                formData.set('lat', lat + LOC_SHAKE * Math.random() * 2 - LOC_SHAKE);
+                formData.set('lon', lon + LOC_SHAKE * Math.random() * 2 - LOC_SHAKE);
                 formData.set('message', values.message);
                 formData.set('image', values.image[0].originFileObj);
 

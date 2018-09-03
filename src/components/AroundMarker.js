@@ -15,7 +15,8 @@ export class AroundMarker extends React.Component {
     }
 
     render() {
-        const {lat, lon} = this.props.position;
+        const { location } = this.props.post;
+        const { lat, lon } = location;
         return(
             <Marker
                 position={{ lat, lng: lon}}
