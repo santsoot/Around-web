@@ -71,19 +71,19 @@ export class Home extends React.Component {
         }
     }
 
-
-
-    loadNearbyPosts = () => {
-        const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+    loadNearbyPosts = (center, radius) => {
         this.setState({ loadingPosts: true, error: ''});
+        const { lat, lon } = center ? center : JSON.parse(localStorage.getItem(POS_KEY));
+        const range = radius ? radius : 20;
         $.ajax({
-            url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`,
+            url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${range}`,
             method: 'GET',
             headers: {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`
             },
         }).then((response) => {
-            this.setState({ posts: response, loadingPosts: false, error: '' });
+            const posts = response ? response : [];
+            this.setState({ posts, loadingPosts: false, error: '' });
             console.log(response);
         }, (error) => {
             this.setState({ loadingPosts: false, error: error.responseText });
@@ -110,9 +110,10 @@ export class Home extends React.Component {
                         containerElement={<div style={{ height: `400px` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
                         posts={this.state.posts}
+                        loadNearbyPosts={this.loadNearbyPosts}
                     />
                   </TabPane>
               </Tabs>
         );
-        }
     }
+}
