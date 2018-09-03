@@ -1,9 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 import { Tabs, Spin } from 'antd';
-import { GEO_OPTIONS, POS_KEY, API_ROOT, TOKEN_KEY, AUTH_PREFIX } from '../constants'
+import { GEO_OPTIONS, POS_KEY, API_ROOT, TOKEN_KEY, AUTH_PREFIX } from '../constants';
 import { Gallery } from './Gallery';
-import { CreatePostButton } from './CreatePostButton'
+import { CreatePostButton } from './CreatePostButton';
+import { WrappedAroundMap } from './AroundMap';
 
 const TabPane = Tabs.TabPane;
 
@@ -36,7 +37,7 @@ export class Home extends React.Component {
     onSuccessLoadGeoLocation = (position) => {
         console.log(position);
         const {latitude, longitude} = position.coords;
-        localStorage.setItem(POS_KEY, JSON.stringify({latitude, longitude}));
+        localStorage.setItem(POS_KEY, JSON.stringify({lat: latitude, lon: longitude}));
         this.setState({loadingGeoLocation: false, error: ''});
         this.loadNearbyPosts();
     }
@@ -70,6 +71,8 @@ export class Home extends React.Component {
         }
     }
 
+
+
     loadNearbyPosts = () => {
         const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
         this.setState({ loadingPosts: true, error: ''});
@@ -100,7 +103,14 @@ export class Home extends React.Component {
                       {this.getGalleryPanelContent()}
                   </TabPane>
                   <TabPane tab="video" key ="2">Content of tab 2</TabPane>
-                  <TabPane tab="Map" key="3">Content of tab 3</TabPane>
+                  <TabPane tab="Map" key="3">
+                    <WrappedAroundMap
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3CEh9DXuyjozqptVB5LA-dN7MxWWkr9s&v=3.exp&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `100%` }} />}
+                        containerElement={<div style={{ height: `400px` }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                    />
+                  </TabPane>
               </Tabs>
         );
         }
