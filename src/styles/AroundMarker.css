@@ -1,4 +1,9 @@
 .around-marker-image {
     height: 120px;
-    widtd: 150px;
+    width: 150px;
+}
+
+.around-marker-video {
+    height: 300px;
+    width: 230px;
 }
